@@ -24,12 +24,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/', function () {
-//     return Inertia::render('', [
+// Route::get('/', [CalenderController::class,'display']); 
+
+
+// function () {
+//     return Inertia::render('Calendar', [
 //         'canLogin' => Route::has('login'),
 //         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
+//         
+
 //     ]);
 // });
 
