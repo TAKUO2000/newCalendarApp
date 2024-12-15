@@ -24,7 +24,7 @@ class ScheduleFactory extends Factory
             'create_user_id'=> fake()->numberBetween(1,5),
             'group_id'=>fake()->numberBetween(1,5),
             'title'=>fake()->word(),
-            'discription'=>fake()->realtext(50),
+            'description'=>fake()->realtext(50),
             'start'=>$start,
             'end'=>$end,
             'color'=>'blue',

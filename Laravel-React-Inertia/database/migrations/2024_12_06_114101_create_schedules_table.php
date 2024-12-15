@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('create_user_id');
             $table->unsignedInteger('group_id')->nullable();
             $table->string('title',50);
-            $table->string('discription')->nullable();
+            $table->string('description')->nullable();
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('color');

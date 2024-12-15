@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,16 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Route::get('/', [CalenderController::class,'display']); 
+Route::get('/', [CalendarController::class,'index']) -> name('calendar.get'); 
+Route::post('/',[CalendarController::class,'store'])->name('calendar.post');
 
-
-// function () {
-//     return Inertia::render('Calendar', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         
-
-//     ]);
-// });
 
 require __DIR__.'/auth.php';
