@@ -9,7 +9,7 @@ import {
 import { FlagIcon } from "@heroicons/react/24/outline";
 
 import AddSchedule from "./AddSchedule";
-import DisplaySchedule from "./DisplaySchdule";
+import DisplaySchedule from "./DisplaySchedule";
 
 import React from "react";
 

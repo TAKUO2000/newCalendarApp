@@ -1,7 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { useDispatch } from "react-redux";
 import { add } from "../store/modules/schedule";
-import { nanoid } from "nanoid";
 
 const AddSchedule = ({ selectedDate, displayStartDate, setDateSchedule }) => {
     const dispatch = useDispatch();
@@ -24,14 +23,14 @@ const AddSchedule = ({ selectedDate, displayStartDate, setDateSchedule }) => {
             create_user_id: 1,
             group_id: 1,
         };
+        console.log(e);
         e.preventDefault();
         await post(route("calendar.post", newEvent), {
-            onSuccess: () => {
-                const keyid = nanoid();
-                const newEventWithId = { ...newEvent, id: keyid };
+            onSuccess: (result) => {
+                const successedEvent = result.props.flash.newEvent;
                 reset();
-                dispatch(add(newEventWithId));
-                setDateSchedule((p) => [...p, newEventWithId]);
+                dispatch(add(successedEvent));
+                setDateSchedule((p) => [...p, successedEvent]);
             },
             onError: (errors) => {
                 console.error("エラー:", errors); // エラーログを確認

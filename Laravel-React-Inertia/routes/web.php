@@ -25,8 +25,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/', [CalendarController::class,'index']) -> name('calendar.get'); 
-Route::post('/',[CalendarController::class,'store'])->name('calendar.post');
+
+Route::controller(CalendarController::class)->group(function () {
+    Route::get('/', 'index')->name('calendar.get');
+    Route::post('/store', 'store')->name('calendar.post');
+    Route::put('/update/{id}', 'update')->name('calendar.put');
+    Route::delete('/delete/{id}', 'destroy')->name('calendar.delete');
+})->middleware('auth');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

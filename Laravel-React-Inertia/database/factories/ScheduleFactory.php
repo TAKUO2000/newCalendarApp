@@ -27,7 +27,7 @@ class ScheduleFactory extends Factory
             'description'=>fake()->realtext(50),
             'start'=>$start,
             'end'=>$end,
-            'color'=>'blue',
+            'color'=>'#00c8ff',
         ];
     }
 }
