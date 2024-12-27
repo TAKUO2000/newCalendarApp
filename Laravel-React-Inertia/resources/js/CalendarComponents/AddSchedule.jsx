@@ -1,10 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { useDispatch } from "react-redux";
 import { add } from "../store/modules/schedule";
-<<<<<<< HEAD
-=======
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
->>>>>>> origin
 
 const AddSchedule = ({ selectedDate, setDateSchedule }) => {
     const dispatch = useDispatch();
@@ -17,30 +14,6 @@ const AddSchedule = ({ selectedDate, setDateSchedule }) => {
         create_user_id: 1,
         group_id: 1,
     });
-<<<<<<< HEAD
-
-    const submitNewEvent = async (e) => {
-        const newEvent = {
-            title: data.title,
-            description: data.description,
-            start: selectedDate + " " + data.startTime,
-            end: data.endDate + " " + data.endTime,
-            color: data.color,
-            create_user_id: 1,
-            group_id: 1,
-        };
-        console.log(e);
-        e.preventDefault();
-        await post(route("calendar.post", newEvent), {
-            onSuccess: (result) => {
-                const successedEvent = result.props.flash.newEvent;
-                reset();
-                dispatch(add(successedEvent));
-                setDateSchedule((p) => [...p, successedEvent]);
-            },
-            onError: (errors) => {
-                console.error("エラー:", errors); // エラーログを確認
-=======
     const submit = (e) => {
         e.preventDefault();
         post(route("calendartest.post", data), {
@@ -57,7 +30,6 @@ const AddSchedule = ({ selectedDate, setDateSchedule }) => {
                     console.log(responseNewEvent.start.substring(0, 10));
                     setDateSchedule((e) => [...e, responseNewEvent]);
                 }
->>>>>>> origin
             },
         });
     };

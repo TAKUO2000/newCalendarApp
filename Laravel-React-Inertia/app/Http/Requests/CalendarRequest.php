@@ -21,16 +21,6 @@ class CalendarRequest extends FormRequest
      */
     public function rules(): array
     {
-<<<<<<< HEAD
-        return [        
-                'create_user_id' => 'required|integer',
-                'group_id' => 'required|integer',
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'start' => 'required|date',
-                'end' => 'required|date|after_or_equal:start',
-                'color' => 'required|string',
-=======
         return [
             'create_user_id' => 'required|integer',
             'group_id' => 'required|integer',
@@ -52,7 +42,6 @@ class CalendarRequest extends FormRequest
             'color.regex' => 'カラーコードは#付きの16進数形式で入力してください。',
             'create_user_id.exists' => '指定されたユーザーIDが存在しません。',
             'group_id.exists' => '指定されたグループIDが存在しません。',
->>>>>>> origin
         ];
     }
 }
