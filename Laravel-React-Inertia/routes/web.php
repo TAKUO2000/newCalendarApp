@@ -31,7 +31,12 @@ Route::controller(CalendarController::class)->group(function () {
     Route::post('/store', 'store')->name('calendar.post');
     Route::put('/update/{id}', 'update')->name('calendar.put');
     Route::delete('/delete/{id}', 'destroy')->name('calendar.delete');
+<<<<<<< HEAD
 })->middleware('auth');
+=======
+    Route::post('/test', 'testpost')->name('calendartest.post');
+});
+>>>>>>> origin
 
 
 require __DIR__ . '/auth.php';

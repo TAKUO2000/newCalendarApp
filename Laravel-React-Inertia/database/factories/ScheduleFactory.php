@@ -18,9 +18,10 @@ class ScheduleFactory extends Factory
     {
         $start = $this->faker->dateTimeBetween('2024-12-01 00:00:00', '2024-12-26 23:59:59');
 
-        $end = (clone $start)->modify('+'.rand(0, 4).' days')->setTime(rand(0, 23), rand(0, 59), rand(0, 59));
+        $end = (clone $start)->modify('+' . rand(0, 4) . ' days')->setTime(rand(0, 23), rand(0, 59), rand(0, 59));
         return [
             //
+<<<<<<< HEAD
             'create_user_id'=> fake()->numberBetween(1,5),
             'group_id'=>fake()->numberBetween(1,5),
             'title'=>fake()->word(),
@@ -28,6 +29,15 @@ class ScheduleFactory extends Factory
             'start'=>$start,
             'end'=>$end,
             'color'=>'#00c8ff',
+=======
+            'create_user_id' => fake()->numberBetween(1, 5),
+            'group_id' => fake()->numberBetween(1, 5),
+            'title' => fake()->word(),
+            'description' => fake()->realtext(50),
+            'start' => $start,
+            'end' => $end,
+            'color' => '#00c8ff',
+>>>>>>> origin
         ];
     }
 }

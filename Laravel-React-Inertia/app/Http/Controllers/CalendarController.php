@@ -49,7 +49,11 @@ class CalendarController extends Controller
 
         return redirect()->route('calendar.get')->with([
             'success' => '予定が更新されました',
+<<<<<<< HEAD
             'editEvent' => $edit,
+=======
+            'newEvent' => $edit,
+>>>>>>> origin
         ]);
     }
 
@@ -58,7 +62,21 @@ class CalendarController extends Controller
         Schedule::find($id)->delete();
         return redirect()->route('calendar.get')->with([
             'success' => '削除が更新されました',
+<<<<<<< HEAD
             'deletedEvent' => $id,
+=======
+            'deletedId' => $id,
+        ]);
+    }
+
+    public function testpost(CalendarRequest $request)
+    {
+        $validated = $request->validated();
+        $event = Schedule::create($validated);
+        return redirect()->route('calendar.get')->with([
+            'message' => '追加しました',
+            'event' =>  ["newEvent" => $event],
+>>>>>>> origin
         ]);
     }
 }

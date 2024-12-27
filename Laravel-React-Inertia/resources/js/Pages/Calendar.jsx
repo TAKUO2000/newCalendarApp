@@ -10,9 +10,13 @@ const Calendar = ({ events }) => {
     const propsEvents = events.filter((e) => e.create_user_id === 1); //user id 1のみプロップスで渡す（serverサイドでのちに変更予定）
     return (
         <>
+<<<<<<< HEAD
             <Head>
                 <title>CalendarPage</title>
             </Head>
+=======
+            <Head title="calendarPAGE" />
+>>>>>>> origin
             <Provider store={store}>
                 <Header />
                 <TopMain events={propsEvents} />
