@@ -1,47 +1,42 @@
 import { useForm } from "@inertiajs/react";
 import { useDispatch } from "react-redux";
 import { add } from "../store/modules/schedule";
-import { nanoid } from "nanoid";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-const AddSchedule = ({ selectedDate, displayStartDate, setDateSchedule }) => {
+const AddSchedule = ({ selectedDate, setDateSchedule }) => {
     const dispatch = useDispatch();
     const { data, setData, post, reset, processing } = useForm({
         title: "",
         description: "",
-        startTime: "00:00",
-        endTime: "23:59",
-        endDate: selectedDate,
+        start: selectedDate + " 00:00",
+        end: selectedDate + " 23:59",
         color: "#00c8ff",
+        create_user_id: 1,
+        group_id: 1,
     });
-
-    const submitNewEvent = async (e) => {
-        const newEvent = {
-            title: data.title,
-            description: data.description,
-            start: selectedDate + " " + data.startTime,
-            end: data.endDate + " " + data.endTime,
-            color: data.color,
-            create_user_id: 1,
-            group_id: 1,
-        };
+    const submit = (e) => {
         e.preventDefault();
-        await post(route("calendar.post", newEvent), {
-            onSuccess: () => {
-                const keyid = nanoid();
-                const newEventWithId = { ...newEvent, id: keyid };
-                reset();
-                dispatch(add(newEventWithId));
-                setDateSchedule((p) => [...p, newEventWithId]);
-            },
-            onError: (errors) => {
-                console.error("エラー:", errors); // エラーログを確認
+        post(route("calendartest.post", data), {
+            onSuccess: (r) => {
+                const response = r.props.flash;
+                const responseNewEvent = response.event.newEvent;
+                const responseMessage = response.message;
+                console.log({ responseNewEvent });
+
+                if (
+                    responseNewEvent.start.substring(0, 10) <= selectedDate &&
+                    responseNewEvent.end.substring(0, 10) >= selectedDate
+                ) {
+                    console.log(responseNewEvent.start.substring(0, 10));
+                    setDateSchedule((e) => [...e, responseNewEvent]);
+                }
             },
         });
     };
 
     return (
-        <div className="mt-2">
-            <form onSubmit={submitNewEvent}>
+        <div className="mt-2 flex justify-center">
+            <form onSubmit={submit}>
                 <h2>新しい予定の追加</h2>
                 <h3>予定の内容</h3>
                 <input
@@ -61,35 +56,31 @@ const AddSchedule = ({ selectedDate, displayStartDate, setDateSchedule }) => {
                 />
                 <br />
                 <h2>日程の期間</h2>
-                <p>
-                    {displayStartDate}
+                <input
+                    type="datetime-local"
+                    value={data.start}
+                    onChange={(e) => setData("start", e.target.value)}
+                />
+                <ChevronDownIcon className="h-8 m-auto" />
+                <input
+                    type="datetime-local"
+                    value={data.end}
+                    onChange={(e) => setData("end", e.target.value)}
+                />
+                <div className="flex mt-2">
                     <input
-                        type="time"
-                        value={data.startTime}
-                        onChange={(e) => setData("startTime", e.target.value)}
+                        type="color"
+                        value={data.color}
+                        onChange={(e) => setData("color", e.target.value)}
                     />
-                    ~
-                </p>
-
-                <input
-                    type="date"
-                    value={data.endDate}
-                    onChange={(e) => setData("endDate", e.target.value)}
-                />
-                <input
-                    type="time"
-                    value={data.endTime}
-                    onChange={(e) => setData("endTime", e.target.value)}
-                />
-                <input
-                    type="color"
-                    value={data.color}
-                    onChange={(e) => setData("color", e.target.value)}
-                />
-
-                <button type="submit" disabled={processing}>
-                    送信
-                </button>
+                    <button
+                        type="submit"
+                        disabled={processing}
+                        className="m-auto bg-gray-400"
+                    >
+                        送信
+                    </button>
+                </div>
             </form>
         </div>
     );

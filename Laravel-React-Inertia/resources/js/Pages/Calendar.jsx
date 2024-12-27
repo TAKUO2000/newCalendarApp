@@ -4,15 +4,19 @@ import TopMain from "../CalendarComponents/TopMain";
 
 import { Provider } from "react-redux";
 import store from "../store";
+import { Head } from "@inertiajs/react";
 
 const Calendar = ({ events }) => {
     const propsEvents = events.filter((e) => e.create_user_id === 1); //user id 1のみプロップスで渡す（serverサイドでのちに変更予定）
     return (
-        <Provider store={store}>
-            <Header />
-            <TopMain events={propsEvents} />
-            <Footer />
-        </Provider>
+        <>
+            <Head title="calendarPAGE" />
+            <Provider store={store}>
+                <Header />
+                <TopMain events={propsEvents} />
+                <Footer />
+            </Provider>
+        </>
     );
 };
 

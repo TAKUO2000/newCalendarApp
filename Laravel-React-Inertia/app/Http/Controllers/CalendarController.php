@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CalendarRequest;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
-
-use function Illuminate\Log\log;
 
 class CalendarController extends Controller
 {
@@ -19,27 +16,59 @@ class CalendarController extends Controller
         $allSchedule = Schedule::all();
 
         return Inertia::render('Calendar', [
-            'events'=>$allSchedule,
+            'events' => $allSchedule,
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CalendarRequest $request)
     {
         try {
-            $validated = $request->validate([
-                'create_user_id' => 'required|integer',
-                'group_id' => 'required|integer',
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'start' => 'required|date',
-                'end' => 'required|date|after_or_equal:start',
-                'color' => 'required|string',
+            $validated = $request->validated();
+            $newEvent = Schedule::create($validated);
+            return redirect()->route('calendar.get')->with([
+                'success' => '新しいイベントが作成されました',
+                'newEvent' => $newEvent, // 必要に応じてデータをフラッシュメッセージで渡す
             ]);
-            Schedule::create($validated);
-
         } catch (\Exception $e) {
             Log::error('データ保存エラー: ' . $e->getMessage());
         }
-        
+    }
+
+    public function update(CalendarRequest $request, $id)
+    {
+        $validated = $request->validated();
+
+        $edit = Schedule::find($id);
+        $edit->update([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'start' => $validated['start'],
+            'end' => $validated['end'],
+            'color' => $validated['color'],
+        ]);
+
+        return redirect()->route('calendar.get')->with([
+            'success' => '予定が更新されました',
+            'newEvent' => $edit,
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        Schedule::find($id)->delete();
+        return redirect()->route('calendar.get')->with([
+            'success' => '削除が更新されました',
+            'deletedId' => $id,
+        ]);
+    }
+
+    public function testpost(CalendarRequest $request)
+    {
+        $validated = $request->validated();
+        $event = Schedule::create($validated);
+        return redirect()->route('calendar.get')->with([
+            'message' => '追加しました',
+            'event' =>  ["newEvent" => $event],
+        ]);
     }
 }

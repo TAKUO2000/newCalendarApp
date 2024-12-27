@@ -51,7 +51,6 @@ const TopMain = ({ events }) => {
         },
         [schedule]
     );
-
     const formatDate = (date) =>
         date.replace("-", "年").replace("-", "月") + "日";
 
